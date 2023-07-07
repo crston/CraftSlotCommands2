@@ -2,6 +2,7 @@ package com.gmail.bobason01;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -18,6 +19,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 
+import javax.annotation.Nonnull;
+
 public class CraftSlotCommands extends JavaPlugin implements Listener
 {
 	public static CraftSlotCommands plugin;
@@ -27,15 +30,17 @@ public class CraftSlotCommands extends JavaPlugin implements Listener
 		plugin = this;
 		saveDefaultConfig();
 		CSCCommand command = new CSCCommand();
-		getCommand("craftslotcommands").setExecutor(command);
-		getCommand("craftslotcommands").setTabCompleter(command);
+		Objects.requireNonNull(getCommand("craftslotcommands")).setExecutor(command);
+		Objects.requireNonNull(getCommand("craftslotcommands")).setTabCompleter(command);
 		getServer().getPluginManager().registerEvents(this, this);
+		if(getConfig().getBoolean("items-enabled"))
+			getServer().getPluginManager().registerEvents(new CraftSlotItemsListener(getConfig()), this);
 	}
+
 
 	private void reload() {
 		reloadConfig();
 	}
-
 
 	@EventHandler
 	public void inventoryClick(InventoryClickEvent e) {
@@ -54,7 +59,7 @@ public class CraftSlotCommands extends JavaPlugin implements Listener
 
 	public static class CSCCommand implements CommandExecutor, TabCompleter {
 		@Override
-		public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		public boolean onCommand(CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
 			if(sender.hasPermission("csc.admin")) {
 				if(args.length > 0 && args[0].equalsIgnoreCase("reload")) {
 					CraftSlotCommands.plugin.reload();
@@ -68,7 +73,7 @@ public class CraftSlotCommands extends JavaPlugin implements Listener
 		}
 
 		@Override
-		public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+		public List<String> onTabComplete(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String alias, String[] args) {
 			List<String> list = new ArrayList<>();
 			if(args.length == 1) list.add("reload");
 			return list;
