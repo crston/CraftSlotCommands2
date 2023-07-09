@@ -21,8 +21,7 @@ import net.md_5.bungee.api.ChatColor;
 
 import javax.annotation.Nonnull;
 
-public class CraftSlotCommands extends JavaPlugin implements Listener
-{
+public class CraftSlotCommands extends JavaPlugin implements Listener {
 	public static CraftSlotCommands plugin;
 
 	@Override
@@ -33,10 +32,9 @@ public class CraftSlotCommands extends JavaPlugin implements Listener
 		Objects.requireNonNull(getCommand("craftslotcommands")).setExecutor(command);
 		Objects.requireNonNull(getCommand("craftslotcommands")).setTabCompleter(command);
 		getServer().getPluginManager().registerEvents(this, this);
-		if(getConfig().getBoolean("items-enabled"))
+		if (getConfig().getBoolean("items-enabled"))
 			getServer().getPluginManager().registerEvents(new CraftSlotItemsListener(getConfig()), this);
 	}
-
 
 	private void reload() {
 		reloadConfig();
