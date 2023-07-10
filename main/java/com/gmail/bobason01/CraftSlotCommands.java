@@ -36,6 +36,14 @@ public class CraftSlotCommands extends JavaPlugin implements Listener {
 			getServer().getPluginManager().registerEvents(new CraftSlotItemsListener(getConfig()), this);
 	}
 
+	public void onDisable(){
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (player.getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+					player.getOpenInventory().getTopInventory().getSize() == 5)
+				CraftSlotItemsListener.removeItems(player.getOpenInventory());
+		}
+	}
+
 	private void reload() {
 		reloadConfig();
 	}

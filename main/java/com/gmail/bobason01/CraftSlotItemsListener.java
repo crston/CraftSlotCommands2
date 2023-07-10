@@ -5,7 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +18,11 @@ import java.util.Objects;
 
 public class CraftSlotItemsListener implements Listener {
 
-    private ItemStack i0, i1, i2, i3, i4;
+    private static ItemStack i0;
+    private static ItemStack i1;
+    private static ItemStack i2;
+    private static ItemStack i3;
+    private static ItemStack i4;
     public CraftSlotItemsListener(FileConfiguration config) {
         i0 = ItemBuilder.build(Objects.requireNonNull(config.getConfigurationSection("slot-item.0")));
         i1 = ItemBuilder.build(Objects.requireNonNull(config.getConfigurationSection("slot-item.1")));
@@ -87,7 +92,7 @@ public class CraftSlotItemsListener implements Listener {
                 inventory.getItem(4) != null && !Objects.requireNonNull(inventory.getItem(4)).getType().isAir())
             inventory.setItem(0, i0);
     }
-    private void removeItems(InventoryView inventory) {
+    static void removeItems(InventoryView inventory) {
         if(inventory.getItem(0) != null && Objects.requireNonNull(inventory.getItem(0)).equals(i0))
             inventory.setItem(0, null);
         if(inventory.getItem(1) != null && Objects.requireNonNull(inventory.getItem(1)).equals(i1))
