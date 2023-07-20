@@ -10,7 +10,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.InventoryView;
 
@@ -63,16 +62,18 @@ public class CraftSlotItemsListener implements Listener {
     }
 
     @EventHandler
-    public void playerLeave(PlayerQuitEvent e)
-    { playerLeaveFunction(e.getPlayer()); }
-    public void playerLeaveFunction(Player p)
-    { removeItems(p.getOpenInventory()); }
+    public void playerLeave(PlayerQuitEvent e) {
+        if(e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory inv) {
+            if(inv.getSize() == 5) removeItems(e.getPlayer().getOpenInventory());
+        }
+    }
+
 
     @EventHandler
     public void playerDeath(PlayerDeathEvent e) {
-        e.getDrops().remove(i1); e.getDrops().remove(i2);
-        e.getDrops().remove(i3); e.getDrops().remove(i4);
-        e.getEntity().closeInventory(); playerLeaveFunction(e.getEntity());
+        if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory inv) {
+            if (inv.getSize() == 5) removeItems(e.getEntity().getOpenInventory());
+        }
     }
 
     private void addItems(InventoryView inventory) {
