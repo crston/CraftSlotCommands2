@@ -63,16 +63,31 @@ public class CraftSlotItemsListener implements Listener {
 
     @EventHandler
     public void playerLeave(PlayerQuitEvent e) {
-        if(e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory inv) {
-            if(inv.getSize() == 5) removeItems(e.getPlayer().getOpenInventory());
+        if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5) {
+            removeItems(e.getPlayer().getOpenInventory());
+
+            Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
+                if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                        e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                    removeItems(e.getPlayer().getOpenInventory());
+            }, 1L);
         }
     }
 
 
+
     @EventHandler
     public void playerDeath(PlayerDeathEvent e) {
-        if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory inv) {
-            if (inv.getSize() == 5) removeItems(e.getEntity().getOpenInventory());
+        if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                e.getEntity().getOpenInventory().getTopInventory().getSize() == 5) {
+            removeItems(e.getEntity().getOpenInventory());
+
+            Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
+                if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                        e.getEntity().getOpenInventory().getTopInventory().getSize() == 5)
+                    removeItems(e.getEntity().getOpenInventory());
+            }, 1L);
         }
     }
 

@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 
 public class CraftSlotCommands extends JavaPlugin implements Listener {
 	public static CraftSlotCommands plugin;
+	private CraftSlotItemsListener csil;
 
 	@Override
 	public void onEnable() {
@@ -32,8 +33,8 @@ public class CraftSlotCommands extends JavaPlugin implements Listener {
 		Objects.requireNonNull(getCommand("craftslotcommands")).setExecutor(command);
 		Objects.requireNonNull(getCommand("craftslotcommands")).setTabCompleter(command);
 		getServer().getPluginManager().registerEvents(this, this);
-		if (getConfig().getBoolean("items-enabled"))
-			getServer().getPluginManager().registerEvents(new CraftSlotItemsListener(getConfig()), this);
+		if(getConfig().getBoolean("items-enabled"))
+			getServer().getPluginManager().registerEvents(csil = new CraftSlotItemsListener(getConfig()), this);
 	}
 
 	public void onDisable(){
@@ -46,6 +47,7 @@ public class CraftSlotCommands extends JavaPlugin implements Listener {
 
 	private void reload() {
 		reloadConfig();
+		csil.reload(getConfig());
 	}
 
 	@EventHandler
