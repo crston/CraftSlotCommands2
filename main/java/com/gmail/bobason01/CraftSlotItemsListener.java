@@ -79,16 +79,14 @@ public class CraftSlotItemsListener implements Listener {
 
     @EventHandler
     public void playerDeath(PlayerDeathEvent e) {
-        if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                e.getEntity().getOpenInventory().getTopInventory().getSize() == 5) {
+        if (e.getEntity() instanceof CraftingInventory && e.getEntity().getInventory().getSize() == 5)
             removeItems(e.getEntity().getOpenInventory());
 
-            Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
-                if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                        e.getEntity().getOpenInventory().getTopInventory().getSize() == 5)
-                    removeItems(e.getEntity().getOpenInventory());
-            }, 1L);
-        }
+        Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
+            if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                    e.getEntity().getOpenInventory().getTopInventory().getSize() == 5)
+                removeItems(e.getEntity().getOpenInventory());
+        }, 1L);
     }
 
     private void addItems(InventoryView inventory) {
