@@ -7,7 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -62,6 +64,20 @@ public class CraftSlotItemsListener implements Listener {
     }
 
     @EventHandler
+    public void playerJoin(PlayerJoinEvent e) {
+        if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5) {
+            addItems(e.getPlayer().getOpenInventory());
+
+            Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
+                if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                        e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                    addItems(e.getPlayer().getOpenInventory());
+            }, 1L);
+        }
+    }
+
+    @EventHandler
     public void playerLeave(PlayerQuitEvent e) {
         if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
                 e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5) {
@@ -87,6 +103,19 @@ public class CraftSlotItemsListener implements Listener {
             if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
                     e.getEntity().getOpenInventory().getTopInventory().getSize() == 5)
                 removeItems(e.getEntity().getOpenInventory());
+        }, 1L);
+    }
+
+    @EventHandler
+    public void playerRespawn(PlayerRespawnEvent e) {
+        if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+            removeItems(e.getPlayer().getOpenInventory());
+
+        Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
+            if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                    e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                addItems(e.getPlayer().getOpenInventory());
         }, 1L);
     }
 
