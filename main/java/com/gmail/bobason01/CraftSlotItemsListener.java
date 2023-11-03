@@ -46,7 +46,7 @@ public class CraftSlotItemsListener implements Listener {
 
         Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
             if (e.getWhoClicked().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                    e.getWhoClicked().getOpenInventory().getTopInventory().getSize() == 5)
+                    e.getWhoClicked().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getWhoClicked().isDead()))
                 addItems(e.getWhoClicked().getOpenInventory());
         }, 1L);
     }
@@ -58,7 +58,7 @@ public class CraftSlotItemsListener implements Listener {
 
         Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
             if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                    e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                    e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead()))
                 addItems(e.getPlayer().getOpenInventory());
         }, 1L);
     }
@@ -66,12 +66,12 @@ public class CraftSlotItemsListener implements Listener {
     @EventHandler
     public void playerJoin(PlayerJoinEvent e) {
         if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5) {
+                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead())) {
             addItems(e.getPlayer().getOpenInventory());
 
             Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
                 if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                        e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                        e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead()))
                     addItems(e.getPlayer().getOpenInventory());
             }, 1L);
         }
@@ -114,7 +114,7 @@ public class CraftSlotItemsListener implements Listener {
 
         Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
             if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                    e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                    e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead()))
                 addItems(e.getPlayer().getOpenInventory());
         }, 1L);
     }
