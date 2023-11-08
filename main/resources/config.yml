@@ -1,9 +1,11 @@
-#      --[ Craft Slot Commands ]--
+#      --[ Craft Slot Commands 2 ]--
 
-# Commands to run on click
+# Enter the command to register in the crafting slots
+# 제작 공간에 등록할 명령어를 입력합니다
 # --------------------------------------#
 # If you put * in the start of a command
-# it will be executed by the console.
+# it will be executed by the console
+# 명령어 앞에 * 를 붙이면 플레이어가 아닌 서버에서 처리합니다
 # --------------------------------------#
 crafting-slot:
   # Crafting result slot
@@ -17,47 +19,46 @@ crafting-slot:
   # Bottom right slot
   4: ""
   
-# Items to show in the crafting grid.
-# --------------------------------------#
-# Feature is still experimental and VERY
-# buggy. To enable, you must set to true:
+# Set whether to place custom items in the crafting slots
+# If you want to use it, change it to true
+# 제작 공간에 커스텀 아이템을 배치할 것인지 설정합니다
+# 사용하고 싶다면 true 로 바꿔주세요
 items-enabled: false
-# NOTE: It's currently not possible
-#       to set the result slot item.
-#
-# Known Bug: You can't pick items up with
-# this feature enabled. To enable an
-# experimental fix for this, please see
-# the bottom of this configuration file.
+
+# Setting up items to use in your crafting slots
+# 제작 공간에 사용할 메뉴 아이템을 설정합니다
+
 # --------------------------------------#
+# model - CustomModelData / damage - Durability / hide-flags - Hide Flags / lore - Lore / skull-owner-uuid - Player Head Item Type 1 Value
+# skull-texture-value - Player Head Item Type 2 Value
+
+# 0 - Result slot / 제작 결과물 공간
+# 1 - Top + Left / 왼쪽 + 위쪽 공간
+# 2 - Top + Right / 오른쪽 + 위쪽 공간
+# 3 - Bottom + Left / 왼쪽 + 아래쪽 공간
+# 4 - Bottom + Right / 오른쪽 + 아래쪽 공간
+
 slot-item:
-  # Top left slot
+  0:
+    material: STICK
+    name: "&6TEST1"
+    model: 0
   1:
-    material: ARROW
-    name: "&6Stand Arrow &5ゴゴゴ"
-    # CustomModelData
-    #model: 2 
-  # Top right slot
-  2:
     material: IRON_SWORD
-    name: "&4*Insert Cool Name*"
-    #hide-flags: true
-    #damage: 127
-  # Bottom left slot
+    name: "&6TEST2"
+    damage: 0
+    hide-flags: true
+  2:
+    material: IRON_AXE
+    name: "&6TEST3"
+    unbreakable: true
   3:
-    material: DIAMOND
-    name: "&9Diamond is"
-    #unbreakable: true
-  # Bottom right slot
+    material: DIRT
+    name: "&6TEST4"
+    lore:
+    - " "
   4:
     material: PLAYER_HEAD
-    name: "&dAria's Amazing Head"
-    #lore:
-    # Empty line
-    #- " "
-    #- "&5The player head of a very"
-    #- "&5hot and adorable person! <3"
-    # The UUID of a player
-    #skull-owner-uuid: "99abd3b5-6ccd-47e3-9461-d0f3519c263a"
-    # Texture values can also be used
-    #skull-texture-value: ""
+    name: "&6TEST5"
+    skull-owner-uuid: "b3c8fb23-9ad8-4390-95e4-576e904d0371"
+    skull-texture-value: ""
