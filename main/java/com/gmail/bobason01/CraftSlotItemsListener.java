@@ -35,9 +35,7 @@ public class CraftSlotItemsListener implements Listener {
 
     @EventHandler
     public void recipeClick(PlayerRecipeBookClickEvent e) {
-        if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory inv) {
-            if (e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING) e.setCancelled(true);
-        }
+        if (e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING) e.setCancelled(true);
     }
 
     @EventHandler
