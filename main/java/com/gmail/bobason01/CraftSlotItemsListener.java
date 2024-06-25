@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -115,6 +116,19 @@ public class CraftSlotItemsListener implements Listener {
             if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
                     e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING && !(e.getPlayer().isDead()))
                 addItems(e.getPlayer().getOpenInventory());
+        }, 1L);
+    }
+
+    @EventHandler
+    public void playerGameModeChange(PlayerGameModeChangeEvent e) {
+        if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING)
+            removeItems(e.getPlayer().getOpenInventory());
+
+        Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
+            if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
+                    e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING)
+                removeItems(e.getPlayer().getOpenInventory());
         }, 1L);
     }
 
