@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -35,30 +36,30 @@ public class CraftSlotItemsListener implements Listener {
     @EventHandler
     public void recipeClick(PlayerRecipeBookClickEvent e) {
         if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory inv) {
-            if (inv.getSize() == 5) e.setCancelled(true);
+            if (e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING) e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void inventoryClick(InventoryClickEvent e) {
-        if (e.getInventory() instanceof CraftingInventory && e.getInventory().getSize() == 5)
-            removeItems(e.getView());
+        if (e.getWhoClicked().getOpenInventory().getType() == InventoryType.CRAFTING)
+            removeItems(e.getWhoClicked().getOpenInventory());
 
         Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
             if (e.getWhoClicked().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                    e.getWhoClicked().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getWhoClicked().isDead()))
+                    e.getWhoClicked().getOpenInventory().getType() == InventoryType.CRAFTING && !(e.getWhoClicked().isDead()))
                 addItems(e.getWhoClicked().getOpenInventory());
         }, 1L);
     }
 
     @EventHandler
     public void inventoryClose(InventoryCloseEvent e) {
-        if (e.getInventory() instanceof CraftingInventory && e.getInventory().getSize() == 5)
-            removeItems(e.getView());
+        if (e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING)
+            removeItems(e.getPlayer().getOpenInventory());
 
         Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
             if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                    e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead()))
+                    e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING && !(e.getPlayer().isDead()))
                 addItems(e.getPlayer().getOpenInventory());
         }, 1L);
     }
@@ -66,12 +67,12 @@ public class CraftSlotItemsListener implements Listener {
     @EventHandler
     public void playerJoin(PlayerJoinEvent e) {
         if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead())) {
-            addItems(e.getPlayer().getOpenInventory());
+                e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING && !(e.getPlayer().isDead())) {
+            removeItems(e.getPlayer().getOpenInventory());
 
             Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
                 if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                        e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead()))
+                        e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING && !(e.getPlayer().isDead()))
                     addItems(e.getPlayer().getOpenInventory());
             }, 1L);
         }
@@ -80,12 +81,12 @@ public class CraftSlotItemsListener implements Listener {
     @EventHandler
     public void playerLeave(PlayerQuitEvent e) {
         if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5) {
+                e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING) {
             removeItems(e.getPlayer().getOpenInventory());
 
             Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
                 if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                        e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                        e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING)
                     removeItems(e.getPlayer().getOpenInventory());
             }, 1L);
         }
@@ -96,12 +97,12 @@ public class CraftSlotItemsListener implements Listener {
     @EventHandler
     public void playerDeath(PlayerDeathEvent e) {
         if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                e.getEntity().getOpenInventory().getTopInventory().getSize() == 5)
+                e.getEntity().getOpenInventory().getType() == InventoryType.CRAFTING)
             removeItems(e.getEntity().getOpenInventory());
 
         Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
             if (e.getEntity().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                    e.getEntity().getOpenInventory().getTopInventory().getSize() == 5)
+                    e.getEntity().getOpenInventory().getType() == InventoryType.CRAFTING)
                 removeItems(e.getEntity().getOpenInventory());
         }, 1L);
     }
@@ -109,12 +110,12 @@ public class CraftSlotItemsListener implements Listener {
     @EventHandler
     public void playerRespawn(PlayerRespawnEvent e) {
         if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5)
+                e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING)
             removeItems(e.getPlayer().getOpenInventory());
 
         Bukkit.getScheduler().runTaskLater(CraftSlotCommands.plugin, () -> {
             if (e.getPlayer().getOpenInventory().getTopInventory() instanceof CraftingInventory &&
-                    e.getPlayer().getOpenInventory().getTopInventory().getSize() == 5 && !(e.getPlayer().isDead()))
+                    e.getPlayer().getOpenInventory().getType() == InventoryType.CRAFTING && !(e.getPlayer().isDead()))
                 addItems(e.getPlayer().getOpenInventory());
         }, 1L);
     }
