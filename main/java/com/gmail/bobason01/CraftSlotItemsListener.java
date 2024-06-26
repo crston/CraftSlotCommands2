@@ -2,6 +2,7 @@ package com.gmail.bobason01;
 
 import com.destroystokyo.paper.event.player.PlayerRecipeBookClickEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -133,20 +134,18 @@ public class CraftSlotItemsListener implements Listener {
     }
 
     private void addItems(InventoryView inventory) {
-        if(inventory.getItem(0) == null || Objects.requireNonNull(inventory.getItem(0)).getType().isAir())
-            inventory.setItem(0, i0);
-        if(inventory.getItem(1) == null || Objects.requireNonNull(inventory.getItem(1)).getType().isAir())
+        if(inventory.getItem(1) == null || Objects.requireNonNull(inventory.getItem(1)).getType() == Material.AIR)
             inventory.setItem(1, i1);
-        if(inventory.getItem(2) == null || Objects.requireNonNull(inventory.getItem(2)).getType().isAir())
+        if(inventory.getItem(2) == null || Objects.requireNonNull(inventory.getItem(2)).getType() == Material.AIR)
             inventory.setItem(2, i2);
-        if(inventory.getItem(3) == null || Objects.requireNonNull(inventory.getItem(3)).getType().isAir())
+        if(inventory.getItem(3) == null || Objects.requireNonNull(inventory.getItem(3)).getType() == Material.AIR)
             inventory.setItem(3, i3);
-        if(inventory.getItem(4) == null || Objects.requireNonNull(inventory.getItem(4)).getType().isAir())
+        if(inventory.getItem(4) == null || Objects.requireNonNull(inventory.getItem(4)).getType() == Material.AIR)
             inventory.setItem(4, i4);
-        if(inventory.getItem(1) != null && !Objects.requireNonNull(inventory.getItem(1)).getType().isAir() &&
-                inventory.getItem(2) != null && !Objects.requireNonNull(inventory.getItem(2)).getType().isAir() &&
-                inventory.getItem(3) != null && !Objects.requireNonNull(inventory.getItem(3)).getType().isAir() &&
-                inventory.getItem(4) != null && !Objects.requireNonNull(inventory.getItem(4)).getType().isAir())
+        if(inventory.getItem(1) != null && !(Objects.requireNonNull(inventory.getItem(1)).getType() == Material.AIR) &&
+                inventory.getItem(2) != null && !(Objects.requireNonNull(inventory.getItem(2)).getType() == Material.AIR) &&
+                inventory.getItem(3) != null && !(Objects.requireNonNull(inventory.getItem(3)).getType() == Material.AIR) &&
+                inventory.getItem(4) != null && !(Objects.requireNonNull(inventory.getItem(4)).getType() == Material.AIR))
             inventory.setItem(0, i0);
     }
     static void removeItems(InventoryView inventory) {
