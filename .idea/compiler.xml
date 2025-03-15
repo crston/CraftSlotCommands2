@@ -7,11 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="CraftSlotCommands2" />
+        <module name="CraftSlotCommands2 (1)" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="CraftSlotCommands2" target="16" />
-      <module name="CraftSlotCommands2 (1)" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>
